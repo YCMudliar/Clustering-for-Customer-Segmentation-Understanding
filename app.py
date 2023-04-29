@@ -1,39 +1,53 @@
-import json
+
+from sklearn import preprocessing 
+import streamlit as st
+import pandas as pd
+import plotly.figure_factory as ff
+import matplotlib.pyplot as plt
+import seaborn as sns
 import pickle
 
-from flask import Flask,request,app,jsonify,url_for,render_template
-import numpy as np
-import pandas as pd
+filename = 'final_modelycm.sav'
+loaded_model = pickle.load(open(filename, 'rb'))
+df = pd.read_csv("final_Clustering.csv")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
-app=Flask(__name__)
-## Load the model
-clustmodel=pickle.load(open('final_modelycm.sav','rb'))
-scalar=pickle.load(open('scaling.pkl','rb'))
-@app.route('/')
-def home():
-    return render_template('home.html')
+st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
+st.title("Clustering for Customer Segmentation Prediction")
 
-@app.route('/predict_api',methods=['POST'])
-def predict_api():
-    data=request.json['data']
-    print(data)
-    print(np.array(list(data.values())).reshape(1,-1))
-    new_data=scalar.transform(np.array(list(data.values())).reshape(1,-1))
-    output=clustmodel.predict(new_data)
-    print(output[0])
-    return jsonify(output[0])
+with st.form("my_form"):
+    balance=st.number_input(label='Balance',step=0.001,format="%.6f")
+    balance_frequency=st.number_input(label='Balance Frequency',step=0.001,format="%.6f")
+    purchases=st.number_input(label='Purchases',step=0.01,format="%.2f")
+    oneoff_purchases=st.number_input(label='OneOff_Purchases',step=0.01,format="%.2f")
+    installments_purchases=st.number_input(label='Installments Purchases',step=0.01,format="%.2f")
+    cash_advance=st.number_input(label='Cash Advance',step=0.01,format="%.6f")
+    purchases_frequency=st.number_input(label='Purchases Frequency',step=0.01,format="%.6f")
+    oneoff_purchases_frequency=st.number_input(label='OneOff Purchases Frequency',step=0.1,format="%.6f")
+    purchases_installment_frequency=st.number_input(label='Purchases Installments Freqency',step=0.1,format="%.6f")
+    cash_advance_frequency=st.number_input(label='Cash Advance Frequency',step=0.1,format="%.6f")
+    cash_advance_trx=st.number_input(label='Cash Advance Trx',step=1)
+    purchases_trx=st.number_input(label='Purchases TRX',step=1)
+    credit_limit=st.number_input(label='Credit Limit',step=0.1,format="%.1f")
+    payments=st.number_input(label='Payments',step=0.01,format="%.6f")
+    minimum_payments=st.number_input(label='Minimum Payments',step=0.01,format="%.6f")
+    prc_full_payment=st.number_input(label='PRC Full Payment',step=0.01,format="%.6f")
+    tenure=st.number_input(label='Tenure',step=1)
 
-@app.route('/predict',methods=['POST'])
-def predict():
-    data=[float(x) for x in request.form.values()]
-    final_input=scalar.transform(np.array(data).reshape(1,-1))
-    print(final_input)
-    output=clustmodel.predict(final_input)[0]
-    return render_template("home.html",prediction_text="The Customer Segmentation Predictionis {}".format(output))
+    data=[[balance,balance_frequency,purchases,oneoff_purchases,installments_purchases,cash_advance,purchases_frequency,oneoff_purchases_frequency,purchases_installment_frequency,cash_advance_frequency,cash_advance_trx,purchases_trx,credit_limit,payments,minimum_payments,prc_full_payment,tenure]]
 
+    submitted = st.form_submit_button("Submit")
 
+if submitted:
+    clust=loaded_model.predict(data)[0]
+    print('Data Belongs to Cluster',clust)
 
-if __name__=="__main__":
-    app.run(debug=True)
-   
-     
+    cluster_df1=df[df['Cluster']==clust]
+    plt.rcParams["figure.figsize"] = (20,3)
+    for c in cluster_df1.drop(['Cluster'],axis=1):
+        fig, ax = plt.subplots()
+        grid= sns.FacetGrid(cluster_df1, col='Cluster')
+        grid= grid.map(plt.hist, c)
+        plt.show()
+        st.pyplot(figsize=(5, 5))
+

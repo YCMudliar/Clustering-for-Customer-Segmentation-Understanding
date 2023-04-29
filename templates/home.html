@@ -1,3 +1,52 @@
-<h1>
-    Hellow World
-</h1>
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1>Customer Segmentation Predictionis</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+      <input type="text" name="balance" placeholder="balance" required="required" /><br>
+    	<input type="text" name="balance_frequency" placeholder="balance_frequency" required="required" /><br>
+        <input type="text" name="purchases" placeholder="purchases" required="required" /><br>
+        <input type="text" name="oneoff_purchases" placeholder="oneoff_purchases" required="required" /><br>
+        <input type="text" name="installments_purchases" placeholder="installments_purchases" required="required" /><br>
+        <input type="text" name="cash_advance" placeholder="cash_advance" required="required" /><br>
+        <input type="text" name="purchases_frequency" placeholder="purchases_frequency" required="required" /><br>
+        <input type="text" name="oneoff_purchases_frequency" placeholder="oneoff_purchases_frequency" required="required" /><br>
+        <input type="text" name="purchases_installment_frequency" placeholder="purchases_installment_frequency" required="required" /><br>
+        <input type="text" name="cash_advance_frequency" placeholder="cash_advance_frequency" required="required" /><br>
+        <input type="text" name="cash_advance_trx" placeholder="cash_advance_trx" required="required" /><br>
+        <input type="text" name="purchases_trx" placeholder="purchases_trx" required="required" /><br>
+        <input type="text" name="credit_limit" placeholder="credit_limit" required="required" /><br>
+        <input type="text" name="payments" placeholder="payments" required="required" /><br>
+        <input type="text" name="minimum_payments" placeholder="minimum_payments" required="required" /><br>
+        <input type="text" name="prc_full_payment" placeholder="prc_full_payment" required="required" /><br>
+        <input type="text" name="tenure" placeholder="tenure" required="required" /><br>
+
+       
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+  
+   
+ </div>
+ {{prediction_text}}
+
+</body>
+</html>

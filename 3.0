@@ -1,0 +1,2 @@
+Requirement already satisfied: Jinja2 in c:\users\acer\internship\clustering-for-customer-segmentation-understanding\venv\lib\site-packages (3.0.0rc2)
+Requirement already satisfied: MarkupSafe>=2.0.0rc2 in c:\users\acer\internship\clustering-for-customer-segmentation-understanding\venv\lib\site-packages (from Jinja2) (2.1.2)
