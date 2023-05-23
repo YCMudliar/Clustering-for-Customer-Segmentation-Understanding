@@ -2,10 +2,8 @@
 
 # 💡 Problem Statement:
 
-Not all customers are same. To know which group is your customer and their
-preferences is a big part for success in your business. Unsupervised machine learning
-can help marketers to know their audience globally and engage them with their products
-accordingly.
+Not all customers are same. Knowing which group is your customer and their preferences is a big part of success in your business. Unsupervised machine learning can help marketers to know their audience globally and engage them with their products accordingly.
+Here we can classify millions of people’s interests through their social media activity and also through other surveys online & offline and cluster them in specific groups of their interest.
 
 Here we can classify millions of people’s interests through their social media activity
 and also through other surveys online & offline and cluster them in specific group of
